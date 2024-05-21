@@ -54,7 +54,7 @@
             $result = getAllBarang();
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_assoc()) {
-                echo "<option value='" . $row["kode_barang"] . "'>" . $row["kode_barang"] . "</option>";
+                echo "<option value='" . $row["nama_barang"] . "'>" . $row["kode_barang"] . "</option>";
               }
             } else {
               echo "<option value=''>Tidak ada barang tersedia</option>";
@@ -63,11 +63,11 @@
           </select>
           <div class="form-group">
             <label for="nama_brg">Nama Barang:</label>
-            <input type="text" class="form-control" id="nama_brg" name="nama_brg" readonly>
+            <input type="text" class="form-control" id="nama_brg" name="nama_barang" readonly>
           </div>
           <div class="form-group">
             <label for="kategori">Jenis:</label>
-            <input type="text" class="form-control" id="kategori" name="kategori" readonly>
+            <input type="text" class="form-control" id="kategori" name="jenis " readonly>
           </div>
           <div class="form-group">
             <label for="merk">Merk:</label>
@@ -90,6 +90,28 @@
             <input type="text" class="form-control" id="keperluan" name="keperluan" required>
           </div>
           <button type="submit" class="btn btn-primary" value='pinjam'>Pinjam</button>
+          <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Apakah Anda yakin untuk membatalkan proses peminjaman?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Lanjutkan</button>
+        <a type="button" class="btn btn-secondary" href="peminjaman.php">Kembali</a>
+      </div>
+    </div>
+  </div>
+</div>
         </form>
       </div>
     </div>
