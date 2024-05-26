@@ -82,7 +82,7 @@ function tambahbarang($kode_brg, $nama_brg, $kategori, $merk, $jumlah)
 function getAllBarang()
 {
     global $koneksi;
-    $sql = "SELECT kode_barang, nama_barang, jumlah FROM barang";
+    $sql = "SELECT kode_barang, nama_barang, merk, jenis, jumlah FROM barang";
     return $koneksi->query($sql);
 }
 

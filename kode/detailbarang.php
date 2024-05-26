@@ -2,7 +2,7 @@
 require_once('database.php');
 
 $kode_barang = $_GET['kode_barang'];
-$sql = "SELECT * FROM barang WHERE kode_brg = '$kode_barang'";
+$sql = "SELECT * FROM barang WHERE kode_barang = '$kode_barang'";
 $result = $koneksi->query($sql);
 
 if ($result->num_rows > 0) {
