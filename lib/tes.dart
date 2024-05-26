@@ -1,47 +1,58 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:sas/barang.dart';
+import 'package:sas/peminjaman.dart';
+import 'package:sas/beranda.dart';
 
-class Tes extends StatefulWidget {
-  Tes({Key? key}) : super(key: key);
+void main() => runApp(const Tes());
 
-  @override
-  State<Tes> createState() => _TesState();
-}
-class _TesState extends State<Tes> {
-  List _listdata = [];
-  Future _getdata() async {
-    try {
-  final response = await http.get(Uri.parse('http://10.5.7.165/projekSas/read2.php'));
-  if (response.statusCode == 200) {
-    print(response.body);
-    final data = jsonDecode(response.body);
-    setState(() {
-      _listdata = data;
-    });
-  } else {
-    print('HTTP Error: ${response.statusCode}');
-  }
-} catch (e) {
-  print('Error: $e');
-}
-
-  }
-  @override
-  void initState() {
-    _getdata();
-    print(_listdata);
-    super.initState();
-  }
+class Tes extends StatelessWidget {
+  const Tes({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Tes"),
+    return MaterialApp(
+      theme: ThemeData(useMaterial3: true),
+      home: const TabBarExample(),
+    );
+  }
+}
+
+class TabBarExample extends StatelessWidget {
+  const TabBarExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('TabBar Sample'),
+          bottom: const TabBar(
+            tabs: <Widget>[
+              Tab(
+                icon: Text("Beranda"),
+              ),
+              Tab(
+                icon: Text("Barang"),
+              ),
+              Tab(
+                icon: Text("Peminjaman"),
+              ),
+              Tab(
+                icon: Icon(Icons.brightness_5_sharp),
+              ),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: <Widget>[
+            Beranda(),
+            Barang(),
+            Peminjaman(),
+          ],
+        ),
       ),
-      body: Text('Body'),
     );
   }
 }

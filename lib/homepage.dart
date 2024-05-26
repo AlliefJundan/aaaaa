@@ -1,58 +1,60 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sas/pinjam.dart';
 
 void main() => runApp(const HomePage());
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   static const String _title = 'Peminjaman';
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: _title,
       home: MyStatefulWidget(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
+  const MyStatefulWidget({Key? key}) : super(key: key);
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
-/// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
 class _MyStatefulWidgetState extends State<MyStatefulWidget>
     with TickerProviderStateMixin {
   late TabController _tabController;
 
-
   List _listdata = [];
+
   Future _getdata() async {
     try {
-      final respone = await http.get(
-        Uri.parse('http://10.5.7.165/projekSas/read2.php'));
-        if (respone.statusCode==200) {
-          print(respone.body);
-          final data = jsonDecode(respone.body);
-          setState(() {
-            _listdata = data;
-          });
-        }
-  } catch (e) {
-    print(e);
+      final response =
+          await http.get(Uri.parse('http://192.168.88.95/projekSas/read.php'));
+      if (response.statusCode == 200) {
+        print('Response Body: ${response.body}');
+        final data = jsonDecode(response.body);
+        setState(() {
+          _listdata = data;
+        });
+      } else {
+        print('HTTP Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
-  }
+
   @override
   void initState() {
-    _getdata();
-    print(_listdata);
     super.initState();
+    _getdata();
     _tabController = TabController(length: 4, vsync: this);
   }
 
@@ -102,21 +104,33 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
           ),
           SingleChildScrollView(
             child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(10.0),
-                  color: Colors.amber,
-                  width: double.infinity,
-                  height: 48.0,
-                  child: Text("Makan Enak Gak Pake Bayar"),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(10.0),
-                  color: Colors.amber,
-                  width: double.infinity,
-                  height: 48.0,
-                ),
-              ],
+              children: _listdata
+                  .map((item) => Card(
+                        child: ListTile(
+                          title: Text(item['nama_barang']),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Kode Barang : " + item['kode_barang']),
+                              Text("Merk Barang : " + item['merk']),
+                              Text("Jenis Barang : " + item['jenis']),
+                              Text("Jumlah : " + item['jumlah']),
+                              SizedBox(height: 10),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Pinjam()),
+                                  );
+                                },
+                                child: Text('Pinjam Barang'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ))
+                  .toList(),
             ),
           ),
           SingleChildScrollView(
