@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
         <body>
             <?php
             session_start();
-            if ($_SESSION['status'] <> "login") {
+            if ($_SESSION['status'] != "login") {
                 header("location:login.php?msg=belum_login");
             } else {
                 require('navbar.php');
@@ -32,7 +32,7 @@ if (isset($_GET['id'])) {
             ?>
 
             <script language="JavaScript" type="text/javascript">
-                function kornfirmasiUpdate(id) {
+                function konfirmasiUpdate(id) {
                     if (confirm("Apakah yakin akan merubah data barang ini")) {
                         window.location.href = 'update_barang.php?id=' + id;
                     }
@@ -41,19 +41,23 @@ if (isset($_GET['id'])) {
 
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
-                    </div>
+                    <div class="col-md-4"></div>
                     <div class="col-md-4">
                         <form action="update_barang.php" method="post">
-                            <input type="hidden" name="id" value="<?php echo $barang['kode_barang']; ?>">
+                            <input type="hidden" name="kode_brg" value="<?php echo $barang['kode_barang']; ?>">
+                            <div class="form-group">
+                                <label for="id_barang">ID Barang</label>
+                                <input class="form-control" id="id_barang" name="id_barang"
+                                    value="<?php echo $barang['id_barang']; ?>" readonly>
+                            </div>
                             <div class="form-group">
                                 <label for="kode">Kode Barang</label>
                                 <input class="form-control" id="kode" name="kode_brg"
                                     value="<?php echo $barang['kode_barang']; ?>">
                             </div>
                             <div class="form-group">
-                                <label for="mnama">Nama Barang</label>
-                                <input class="form-control" id="mnama" name="nama_brg"
+                                <label for="nama">Nama Barang</label>
+                                <input class="form-control" id="nama" name="nama_brg"
                                     value="<?php echo $barang['nama_barang']; ?>">
                             </div>
                             <div class="form-group">
@@ -96,7 +100,8 @@ if (isset($_GET['id'])) {
                                         </div>
                                     </div>
                                 </div>
-                            </div> <a type="button" class="btn btn-primary" href="barang.php" name="kembali"
+                            </div> 
+                            <a type="button" class="btn btn-primary" href="barang.php" name="kembali"
                                 value="kembali">Kembali</a>
                         </form>
                     </div>

@@ -63,7 +63,7 @@ $nomor = 0;
               <?php echo $nomor; ?>
             </th>
             <td>
-              <?php echo $item['kode_barang']; ?>
+              <?php echo $item['id_barang']; ?>
             </td>
             <td>
               <?php echo $item['kode_barang']; ?>
@@ -81,7 +81,7 @@ $nomor = 0;
               <?php echo $item['jumlah']; ?>
             </td>
             <td>
-              <?php echo "<a type='button' class='btn btn-success' href='edit.php?id=$item[kode_barang]'>Edit</a> | <a type='button' class='btn btn-danger' href='javascript:hapusData(" . $item['kode_barang'] . ")'>Delete</a>"; ?>
+              <?php echo "<a type='button' class='btn btn-success' href='edit.php?id=$item[id_barang]'>Edit</a> | <a type='button' class='btn btn-danger' href='javascript:hapusData(" . $item['id_barang'] . ")'>Delete</a>"; ?>
             </td>
           </tr>
         <?php endforeach ?>

@@ -1,11 +1,43 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    crossorigin="anonymous">
+  <!-- Di dalam tag <head> sebelum tag <body> -->
+  <script>
+    var jumlahTersediaSekarang = 0; // Variabel global untuk menyimpan jumlah barang saat halaman dimuat
+
+    window.onload = function () {
+      document.getElementById("form_peminjaman").reset();
+      getBarangDetails();
+      jumlahTersediaSekarang = parseInt(document.getElementById("jumlah_tersedia").value); // Simpan nilai jumlah tersedia saat halaman dimuat
+    }
+
+    // Fungsi cekJumlah tetap sama seperti sebelumnya
+
+    function cekJumlah() {
+      var jumlah_dipinjam = parseInt(document.getElementById("jumlah").value);
+
+      if (jumlah_dipinjam <= 0) {
+        alert("Jumlah yang dipinjam harus lebih dari 0.");
+        return false;
+      }
+
+      if (jumlah_dipinjam > jumlahTersediaSekarang) { // Gunakan variabel global jumlahTersediaSekarang
+        alert("Jumlah yang dipinjam melebihi jumlah yang tersedia.");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+
   <title>Formulir Peminjaman Barang</title>
 </head>
+
 <body>
   <?php
   session_start();
@@ -13,7 +45,7 @@
     header("location:login.php?msg=belum_login");
     exit;
   } else {
-    require('navbar.php');
+    require ('navbar.php');
   }
   ?>
   <div class="container">
@@ -22,24 +54,22 @@
       <div class="col-md-4">
         <h2 align="center">Formulir Peminjaman Barang</h2>
         <form method="post" action="proses_peminjaman.php" id="form_peminjaman" onsubmit="return cekJumlah()">
-          <label for="kode_barang">Pilih ID Barang:</label>
+          <label for="kode_barang">Pilih Kode Barang:</label>
           <select class="form-control" name="kode_barang" id="kode_barang" onchange="getBarangDetails()">
+            <option value="">Kosong</option> <!-- Tambahkan opsi "kosong" di sini -->
             <?php
-            require_once('database.php');
+            require_once ('database.php');
             $result = getAllBarang();
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_assoc()) {
                 echo "<option value='" . $row["kode_barang"] . "'>" . $row["kode_barang"] . "</option>";
               }
             } else {
-              echo "<option value=''>Tidak ada barang tersedia</option>";
+              echo "<option value='' disabled>Tidak ada barang tersedia</option>"; // Opsi "kosong" tidak dapat dipilih jika tidak ada barang tersedia
             }
             ?>
           </select>
-          <div class="form-group">
-            <label for="kode_brg">Kode Barang:</label>
-            <input type="text" class="form-control" id="kode_brg" name="kode_barang" readonly>
-          </div>
+
           <div class="form-group">
             <label for="nama_brg">Nama Barang:</label>
             <input type="text" class="form-control" id="nama_brg" name="nama_barang" readonly>
@@ -73,7 +103,7 @@
       </div>
     </div>
     <script>
-      window.onload = function() {
+      window.onload = function () {
         document.getElementById("form_peminjaman").reset();
         getBarangDetails();
       }
@@ -85,7 +115,6 @@
         xhr.onreadystatechange = function () {
           if (xhr.readyState == 4 && xhr.status == 200) {
             var barang = JSON.parse(xhr.responseText);
-            document.getElementById("kode_brg").value = barang.kode_barang;
             document.getElementById("nama_brg").value = barang.nama_barang;
             document.getElementById("kategori").value = barang.jenis;
             document.getElementById("merk").value = barang.merk;
@@ -113,4 +142,5 @@
       }
     </script>
 </body>
+
 </html>

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Bulan Mei 2024 pada 05.38
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.2.12
+-- Generation Time: May 27, 2024 at 05:24 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,11 +24,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `barang`
+-- Table structure for table `barang`
 --
 
 CREATE TABLE `barang` (
-  `kode_barang` int(11) NOT NULL,
+  `id_barang` int(11) NOT NULL,
+  `kode_barang` varchar(11) NOT NULL,
   `nama_barang` varchar(70) NOT NULL,
   `merk` varchar(25) NOT NULL,
   `jenis` varchar(25) NOT NULL,
@@ -36,17 +37,17 @@ CREATE TABLE `barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `barang`
+-- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`kode_barang`, `nama_barang`, `merk`, `jenis`, `jumlah`) VALUES
-(3, 'qwe', 'qwe', 'qwe', 1088869),
-(4, '123', '123', '123', 1111090);
+INSERT INTO `barang` (`id_barang`, `kode_barang`, `nama_barang`, `merk`, `jenis`, `jumlah`) VALUES
+(239, 'BG003', 'asd', 'asd', 'asd', 99),
+(240, 'BG007', 'asd', 'asd', 'asd', 1000);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `peminjaman`
+-- Table structure for table `peminjaman`
 --
 
 CREATE TABLE `peminjaman` (
@@ -62,24 +63,33 @@ CREATE TABLE `peminjaman` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `peminjaman`
+-- Dumping data for table `peminjaman`
 --
 
 INSERT INTO `peminjaman` (`id_peminjaman`, `id_peminjam`, `kode_brg`, `tgl_pinjam`, `tgl_kembali`, `jml_brg`, `keperluan`, `status`, `id_login`) VALUES
-(14, 0, '3', '2024-05-20 10:11:05', '2024-05-20 10:33:02', 1, '1', 'Kembali', 1),
-(15, 0, '3', '2024-05-20 10:11:09', '2024-05-20 10:21:46', 2, '2', 'Kembali', 2),
-(16, 0, '4', '2024-05-20 10:18:26', '2024-05-20 10:21:47', 1, '1', 'Kembali', 1),
-(17, 0, '4', '2024-05-20 10:20:43', '2024-05-20 10:21:47', 1, '1', 'Kembali', 1),
-(18, 0, '3', '2024-05-20 10:22:28', '2024-05-20 10:25:45', 2, '2', 'Kembali', 32),
-(19, 0, '3', '2024-05-20 10:23:50', '0000-00-00 00:00:00', 2, '3', 'Dipinjam', 1),
-(20, 0, '3', '2024-05-20 10:26:36', '2024-05-20 10:27:14', 2, '3', 'Kembali', 1),
-(21, 3, '4', '2024-05-20 10:27:08', '2024-05-20 10:27:12', 1, '2', 'Kembali', 3),
-(22, 1231, '3', '2024-05-20 10:33:22', '2024-05-20 10:33:39', 22222, '22', 'Kembali', 1231);
+(28, 1, 'BG001', '2024-05-27 09:46:11', '2024-05-27 10:02:10', 1, '1', 'Kembali', 1),
+(29, 11, 'BG007', '2024-05-27 09:46:45', '2024-05-27 10:06:18', 11, '21', 'Kembali', 11),
+(30, 123, 'BG007', '2024-05-27 09:52:14', '2024-05-27 09:52:25', 1, '1', 'Kembali', 123),
+(31, 1, 'BG003', '2024-05-27 10:12:13', '0000-00-00 00:00:00', 1, '1', 'Dipinjam', 1),
+(32, 1, 'BG003', '2024-05-27 10:12:39', '0000-00-00 00:00:00', 1, '1', 'Dipinjam', 1),
+(33, 123, 'BG007', '2024-05-27 10:13:09', '0000-00-00 00:00:00', 1, 'lapar', 'Dipinjam', 123),
+(34, 2232, 'BG003', '2024-05-27 10:13:24', '0000-00-00 00:00:00', 10, '1', 'Dipinjam', 2232),
+(35, 234, 'BG007', '2024-05-27 10:13:40', '0000-00-00 00:00:00', 10, '1', 'Dipinjam', 234),
+(36, 1, 'BG003', '2024-05-27 10:14:31', '0000-00-00 00:00:00', 1, '1', 'Dipinjam', 1),
+(37, 1, 'BG007', '2024-05-27 10:14:43', '0000-00-00 00:00:00', 1, '1', 'Dipinjam', 1),
+(38, 1, 'BG007', '2024-05-27 10:16:35', '0000-00-00 00:00:00', 1, '1', 'Dipinjam', 1),
+(39, 1, 'BG007', '2024-05-27 10:16:51', '0000-00-00 00:00:00', 1, '1', 'Dipinjam', 1),
+(40, 2, 'BG007', '2024-05-27 10:17:02', '0000-00-00 00:00:00', 2, '2', 'Dipinjam', 2),
+(41, 1, 'BG007', '2024-05-27 10:19:21', '0000-00-00 00:00:00', 1, '1', 'Dipinjam', 1),
+(42, 1, 'BG003', '2024-05-27 10:21:53', '0000-00-00 00:00:00', 1, '1', 'Dipinjam', 1),
+(43, 1, 'BG007', '2024-05-27 10:22:04', '0000-00-00 00:00:00', 1, '1', 'Dipinjam', 1),
+(44, 1, 'BG007', '2024-05-27 10:22:22', '0000-00-00 00:00:00', 10, '1', 'Dipinjam', 1),
+(45, 10, 'BG003', '2024-05-27 10:22:44', '0000-00-00 00:00:00', 10, 'lapar', 'Dipinjam', 10);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -91,7 +101,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `nama_user`, `username`, `password`, `role`) VALUES
@@ -103,41 +113,41 @@ INSERT INTO `user` (`id_user`, `nama_user`, `username`, `password`, `role`) VALU
 --
 
 --
--- Indeks untuk tabel `barang`
+-- Indexes for table `barang`
 --
 ALTER TABLE `barang`
-  ADD PRIMARY KEY (`kode_barang`);
+  ADD PRIMARY KEY (`id_barang`);
 
 --
--- Indeks untuk tabel `peminjaman`
+-- Indexes for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
   ADD PRIMARY KEY (`id_peminjaman`);
 
 --
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `barang`
+-- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `kode_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
 
 --
--- AUTO_INCREMENT untuk tabel `peminjaman`
+-- AUTO_INCREMENT for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
-  MODIFY `id_peminjaman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_peminjaman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;

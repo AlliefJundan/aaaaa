@@ -19,7 +19,7 @@ function tampildata($tablename)
 function editdatabarang($tablename, $id)
 {
     global $koneksi;
-    $query = "SELECT * from $tablename where kode_barang = $id";
+    $query = "SELECT * from $tablename where id_barang = $id";
     $hasil = $koneksi->query($query);
 
     if ($hasil->num_rows > 0) {
@@ -33,7 +33,7 @@ function editdatabarang($tablename, $id)
 function delete($tablename, $id)
 {
     global $koneksi;
-    $hasil = mysqli_query($koneksi, "DELETE from $tablename where kode_barang='$id'");
+    $hasil = mysqli_query($koneksi, "DELETE from $tablename where id_barang='$id'");
     return $hasil;
 }
 
