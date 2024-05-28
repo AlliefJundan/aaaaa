@@ -14,7 +14,7 @@ class _TambahState extends State<Tambah> {
   TextEditingController jenisController = TextEditingController();
   TextEditingController jumlahController = TextEditingController();
 
-  Future<void> _tambahBarang() async {
+  Future<bool> _update() async {
     final response = await http.post(
       Uri.parse('http://192.168.88.90/projekSas/tambah_barang.php'),
       body: {
@@ -31,10 +31,12 @@ class _TambahState extends State<Tambah> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(result['pesan'])),
       );
+      return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(result['pesan'])),
       );
+      return false;
     }
   }
 
@@ -94,12 +96,32 @@ class _TambahState extends State<Tambah> {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _tambahBarang();
+                    _update().then((value) {
+                      final snackBar = SnackBar(
+                        content: Text(value
+                            ? "Barang berhasil ditambahkan"
+                            : "Barang gagal ditambahkan"),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      if (value) {
+                        namaController.clear();
+                        merkController.clear();
+                        jenisController.clear();
+                        jumlahController.clear();
+                      }
+                    });
+                    Navigator.pop(
+                        context); // Kembali ke halaman sebelumnya setelah berhasil menambahkan
                   }
                 },
-                child: Text('Tambah Barang'),
+                child: Text('Simpan'),
               ),
             ],
           ),
@@ -108,7 +130,3 @@ class _TambahState extends State<Tambah> {
     );
   }
 }
-
-void main() => runApp(MaterialApp(
-      home: Tambah(),
-    ));
