@@ -8,7 +8,7 @@ $koneksi = mysqli_connect($host, $user, $pass, $dbname) or die("Gagal terhubung 
 function tampildata($tablename)
 {
     global $koneksi;
-    $hasil = mysqli_query($koneksi, "SELECT peminjaman.id_peminjaman, peminjaman.tgl_pinjam, peminjaman.tgl_kembali, peminjaman.id_peminjam, barang.kode_barang, barang.nama_barang, peminjaman.jml_brg, peminjaman.keperluan, peminjaman.status, peminjaman.id_login FROM peminjaman INNER JOIN barang on peminjaman.kode_brg = barang.kode_barang ORDER BY id_peminjaman ASC");
+    $hasil = mysqli_query($koneksi, "SELECT peminjaman.id_peminjaman, peminjaman.tgl_pinjam, peminjaman.tgl_kembali, peminjaman.id_peminjam, barang.id_barang, barang.kode_barang, barang.nama_barang, peminjaman.jml_brg, peminjaman.keperluan, peminjaman.status, peminjaman.id_login FROM peminjaman INNER JOIN barang on peminjaman.id_barang = barang.id_barang ORDER BY id_peminjaman ASC");
     $rows = [];
     while ($row = mysqli_fetch_assoc($hasil)) {
         $rows[] = $row;
