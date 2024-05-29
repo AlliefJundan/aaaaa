@@ -1,41 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:sas/barang.dart';
 
 class Tambah extends StatefulWidget {
+  const Tambah({Key? key});
+
   @override
-  _TambahState createState() => _TambahState();
+  State<Tambah> createState() => _FormulirState();
 }
 
-class _TambahState extends State<Tambah> {
-  final _formKey = GlobalKey<FormState>();
-  TextEditingController namaController = TextEditingController();
-  TextEditingController merkController = TextEditingController();
-  TextEditingController jenisController = TextEditingController();
-  TextEditingController jumlahController = TextEditingController();
+class _FormulirState extends State<Tambah> {
+  final formkey = GlobalKey<FormState>();
+  TextEditingController id_barang = TextEditingController();
+  TextEditingController kode_barang = TextEditingController();
+  TextEditingController nama_barang = TextEditingController();
+  TextEditingController merk = TextEditingController();
+  TextEditingController jenis = TextEditingController();
+  TextEditingController jumlah = TextEditingController();
 
-  Future<bool> _update() async {
+  Future<bool> _simpan() async {
     final response = await http.post(
-      Uri.parse('http://192.168.88.90/projekSas/tambah_barang.php'),
+      Uri.parse('http://192.168.43.246/projekSas/create.php'),
       body: {
-        'nama_barang': namaController.text,
-        'merk_barang': merkController.text,
-        'jenis_barang': jenisController.text,
-        'jumlah_barang': jumlahController.text,
+        'id_barang': id_barang.text,
+        'kode_barang': kode_barang.text,
+        'nama_barang': nama_barang.text,
+        'merk': merk.text,
+        'jenis': jenis.text,
+        'jumlah': jumlah.text,
       },
     );
-
-    final result = json.decode(response.body);
-
-    if (result['success']) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result['pesan'])),
-      );
+    if (response.statusCode == 200) {
       return true;
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(result['pesan'])),
-      );
       return false;
     }
   }
@@ -44,57 +41,111 @@ class _TambahState extends State<Tambah> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tambah Barang'),
+        title: Text('Tambahkan Barang'),
+        backgroundColor: Colors.deepOrange,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+      body: Form(
+        key: formkey,
+        child: Container(
+          padding: EdgeInsets.all(20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-                controller: namaController,
-                decoration: InputDecoration(labelText: 'Nama Barang'),
+                controller: nama_barang,
+                decoration: InputDecoration(
+                  hintText: 'Nama Barang',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Nama Barang harus diisi';
+                  if (value!.isEmpty) {
+                    return 'Nama barang tidak boleh kosong!';
                   }
                   return null;
                 },
               ),
+              SizedBox(height: 10),
               TextFormField(
-                controller: merkController,
-                decoration: InputDecoration(labelText: 'Merk Barang'),
+                controller: id_barang,
+                decoration: InputDecoration(
+                  hintText: 'ID Barang',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Merk Barang harus diisi';
+                  if (value!.isEmpty) {
+                    return 'ID Barang tidak boleh kosong!';
                   }
                   return null;
                 },
               ),
+              SizedBox(height: 10),
               TextFormField(
-                controller: jenisController,
-                decoration: InputDecoration(labelText: 'Jenis Barang'),
+                controller: kode_barang,
+                decoration: InputDecoration(
+                  hintText: ' Kode Barang',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Jenis Barang harus diisi';
+                  if (value!.isEmpty) {
+                    return 'Kode Barang tidak boleh kosong!';
                   }
                   return null;
                 },
               ),
+              SizedBox(height: 10),
               TextFormField(
-                controller: jumlahController,
-                decoration: InputDecoration(labelText: 'Jumlah Barang'),
-                keyboardType: TextInputType.number,
+                controller: merk,
+                decoration: InputDecoration(
+                  hintText: ' Merk Barang',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Jumlah Barang harus diisi';
+                  if (value!.isEmpty) {
+                    return 'Merk Barang tidak boleh kosong!';
                   }
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 10),
+              TextFormField(
+                controller: jenis,
+                decoration: InputDecoration(
+                  hintText: 'Jenis Barang',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Jenis Barang tidak boleh kosong!';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 10),
+              TextFormField(
+                controller: jumlah,
+                decoration: InputDecoration(
+                  hintText: 'Jumlah Barang',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Jumlah Barang tidak boleh kosong!';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 10),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -102,8 +153,8 @@ class _TambahState extends State<Tambah> {
                   ),
                 ),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _update().then((value) {
+                  if (formkey.currentState!.validate()) {
+                    _simpan().then((value) {
                       final snackBar = SnackBar(
                         content: Text(value
                             ? "Barang berhasil ditambahkan"
@@ -111,14 +162,19 @@ class _TambahState extends State<Tambah> {
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       if (value) {
-                        namaController.clear();
-                        merkController.clear();
-                        jenisController.clear();
-                        jumlahController.clear();
+                        nama_barang.clear();
+                        kode_barang.clear();
+                        merk.clear();
+                        jenis.clear();
+                        jumlah.clear();
+                        id_barang.clear();
                       }
                     });
-                    Navigator.pop(
-                        context); // Kembali ke halaman sebelumnya setelah berhasil menambahkan
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => BarangPage()),
+                      (route) => false,
+                    );
                   }
                 },
                 child: Text('Simpan'),

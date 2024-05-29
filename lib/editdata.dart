@@ -34,7 +34,7 @@ class _EditDataPageState extends State<EditDataPage> {
   Future<bool> _editBarang() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.88.90/projekSas/edit.php'),
+        Uri.parse('http://192.168.43.246/projekSas/edit.php'),
         body: {
           'id_barang': widget.ListData['id_barang'],
           'nama_barang': namaController.text,

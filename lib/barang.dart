@@ -39,7 +39,7 @@ class _BarangState extends State<Barang> {
   Future _getdata() async {
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.88.90/projekSas/read.php'));
+          await http.get(Uri.parse('http://192.168.43.246/projekSas/read.php'));
       if (response.statusCode == 200) {
         print('Response Body: ${response.body}');
         final data = jsonDecode(response.body);
@@ -57,7 +57,7 @@ class _BarangState extends State<Barang> {
   Future _hapus(String id) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.88.90/projekSas/delete.php'),
+        Uri.parse('http://192.168.43.246/projekSas/delete.php'),
         body: {
           'id_barang': id,
         },

@@ -26,8 +26,8 @@ class _PeminjamanState extends State<Peminjaman> {
 
   Future _getdata() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://192.168.88.90/projekSas/read2.php'));
+      final response = await http
+          .get(Uri.parse('http://192.168.43.246/projekSas/read2.php'));
       if (response.statusCode == 200) {
         print('Response Body: ${response.body}');
         final data = jsonDecode(response.body);
@@ -61,6 +61,8 @@ class _PeminjamanState extends State<Peminjaman> {
                       children: [
                         Text("ID Peminjaman : " + item['id_peminjaman']),
                         Text("ID Peminjam : " + item['id_peminjam']),
+                        Text("ID Barang : " + item['id_barang']),
+                        Text("Kode Barang : " + item['kode_barang']),
                         Text("Tanggal Pinjam : " + item['tgl_pinjam']),
                         Text("Tanggal Kembali : " + item['tgl_kembali']),
                         Text("Jumlah Pinjam : " + item['jml_brg']),
