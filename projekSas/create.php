@@ -1,24 +1,34 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+
+// Koneksi ke database
 $conn = mysqli_connect("localhost", "root", "", "sas");
 
+// Ambil data dari POST request
+$id_barang = $_POST['id_barang'];
+$kode_barang = $_POST['kode_barang'];
+$nama_barang = $_POST['nama_barang'];
+$merk = $_POST['merk'];
+$jenis = $_POST['jenis'];
+$jumlah = $_POST['jumlah'];
 
-    $kode = $_POST['kode_barang'];
-    $nama = $_POST['nama_barang'];
-    $merk = $_POST['merk_barang'];
-    $jenis = $_POST['jenis_barang'];
-    $jumlah = $_POST['jumlah_barang'];
-    $peminjam = $_POST['id_peminjam'];
-    $keperluan = $_POST['keperluan'];
-    $jumlahPinjam = $_POST['jml_brg'];
+// Query untuk menyimpan data barang ke dalam database
+$query = "INSERT INTO barang (id_barang, kode_barang, nama_barang, merk, jenis, jumlah) 
+          VALUES ('$id_barang', '$kode_barang', '$nama_barang', '$merk', '$jenis', '$jumlah')";
 
-    $data = "INSERT INTO peminjaman (tgl_pinjam, id_peminjam, kode_brg, jml_brg, keperluan, status, id_login)
-              VALUES (NOW(), '$peminjam', '$kode', '$jumlahPinjam', '$keperluan', 'Dipinjam', '$peminjam')";
+// Jalankan query
+$data = mysqli_query($conn, $query);
 
-    if ($data) {
-echo json_encode([
-'pesan' => 'Sukses']);
-}else {
-echo json_encode([
-'pesan' => 'Gagal']);
+// Buat respons JSON
+if ($data) {
+    echo json_encode([
+        'success' => true,
+        'pesan' => 'Sukses'
+    ]);
+} else {
+    echo json_encode([
+        'success' => false,
+        'pesan' => 'Gagal menyimpan data barang'
+    ]);
 }
 ?>
