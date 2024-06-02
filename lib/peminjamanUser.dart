@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sas/pinjam.dart';
 
-class PeminjamanPage extends StatelessWidget {
+class PeminjamanUserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Peminjaman'),
+          title: Text('PeminjamanUser'),
         ),
-        body: Peminjaman());
+        body: PeminjamanUser());
   }
 }
 
-class Peminjaman extends StatefulWidget {
-  const Peminjaman({Key? key}) : super(key: key);
+class PeminjamanUser extends StatefulWidget {
+  const PeminjamanUser({Key? key}) : super(key: key);
 
   @override
-  _PeminjamanState createState() => _PeminjamanState();
+  _PeminjamanUserState createState() => _PeminjamanUserState();
 }
 
-class _PeminjamanState extends State<Peminjaman> {
+class _PeminjamanUserState extends State<PeminjamanUser> {
   List _listdata = [];
 
   Future _getdata() async {
@@ -59,7 +59,8 @@ class _PeminjamanState extends State<Peminjaman> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("ID Peminjaman : " + item['id_peminjaman']),
+                        Text(
+                            "ID PeminjamanUser : " + item['id_PeminjamanUser']),
                         Text("ID Peminjam : " + item['id_peminjam']),
                         Text("ID Barang : " + item['id_barang']),
                         Text("Kode Barang : " + item['kode_barang']),
@@ -70,17 +71,6 @@ class _PeminjamanState extends State<Peminjaman> {
                         Text("Status : " + item['status']),
                         Text("ID Login : " + item['id_login']),
                         SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Pinjam(),
-                              ),
-                            );
-                          },
-                          child: Text('Kembalikan'),
-                        ),
                       ],
                     ),
                   ),

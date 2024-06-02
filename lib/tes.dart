@@ -3,6 +3,10 @@ import 'package:sas/barang.dart';
 import 'package:sas/peminjaman.dart';
 import 'package:sas/beranda.dart';
 
+import 'barang.dart';
+import 'beranda.dart';
+import 'peminjaman.dart';
+
 void main() => runApp(const Tes());
 
 class Tes extends StatelessWidget {

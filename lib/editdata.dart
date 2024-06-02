@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; // Import this for TextInputFormatter
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sas/barang.dart';
@@ -34,7 +35,7 @@ class _EditDataPageState extends State<EditDataPage> {
   Future<bool> _editBarang() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.43.246/projekSas/edit.php'),
+        Uri.parse('http://192.168.88.90/projekSas/edit.php'),
         body: {
           'id_barang': widget.ListData['id_barang'],
           'nama_barang': namaController.text,
@@ -146,13 +147,17 @@ class _EditDataPageState extends State<EditDataPage> {
               SizedBox(height: 10),
               TextFormField(
                 controller: jumlahController,
+                keyboardType:
+                    TextInputType.number, // Set keyboard type to number
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly
+                ], // Only allow digits
                 decoration: InputDecoration(
                   hintText: 'Jumlah Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Jumlah Barang harus diisi';

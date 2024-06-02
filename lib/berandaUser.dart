@@ -2,26 +2,24 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:sas/barang.dart';
-import 'package:sas/peminjaman.dart';
-import 'package:sas/pinjam.dart';
+import 'package:sas/barangUser.dart';
+import 'package:sas/peminjamanUser.dart';
 import 'package:flutter/services.dart';
-import 'package:sas/user.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-  runApp(const Beranda());
+  runApp(const BerandaUser());
 }
 
-class Beranda extends StatefulWidget {
-  const Beranda({Key? key}) : super(key: key);
+class BerandaUser extends StatefulWidget {
+  const BerandaUser({Key? key}) : super(key: key);
 
   @override
   _BerandaState createState() => _BerandaState();
 }
 
-class _BerandaState extends State<Beranda> {
+class _BerandaState extends State<BerandaUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +34,7 @@ class _BerandaState extends State<Beranda> {
               children: [
                 const SizedBox(height: 0),
                 ListTile(
-                  title: Text('HI Admin',
+                  title: Text('HI',
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall
@@ -65,7 +63,7 @@ class _BerandaState extends State<Beranda> {
                     GridView.count(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: 3,
+                      crossAxisCount: 2,
                       crossAxisSpacing: 40,
                       mainAxisSpacing: 30,
                       children: [
@@ -74,15 +72,13 @@ class _BerandaState extends State<Beranda> {
                             'Barang',
                             CupertinoIcons.cube_box_fill,
                             Colors.deepOrangeAccent,
-                            BarangPage()),
+                            BarangUserPage()),
                         itemDashboard(
                             context,
                             'Peminjaman',
                             CupertinoIcons.table,
                             Colors.deepOrangeAccent,
-                            PeminjamanPage()),
-                        itemDashboard(context, 'User', CupertinoIcons.person_2,
-                            Colors.deepOrangeAccent, UserPage()),
+                            PeminjamanUserPage()),
                       ],
                     ),
                     Spacer(flex: 3),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:sas/barang.dart';
 
@@ -20,7 +21,7 @@ class _FormulirState extends State<Tambah> {
 
   Future<bool> _simpan() async {
     final response = await http.post(
-      Uri.parse('http://192.168.43.246/projekSas/create.php'),
+      Uri.parse('http://192.168.88.90/projekSas/create.php'),
       body: {
         'id_barang': id_barang.text,
         'kode_barang': kode_barang.text,
@@ -68,24 +69,29 @@ class _FormulirState extends State<Tambah> {
               SizedBox(height: 10),
               TextFormField(
                 controller: id_barang,
+                keyboardType:
+                    TextInputType.number, // Set keyboard type to number
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly
+                ], // Only allow digits
                 decoration: InputDecoration(
                   hintText: 'ID Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'ID Barang tidak boleh kosong!';
-                  }
-                  return null;
-                },
+                // validator: (value) {
+                //   if (value!.isEmpty) {
+                //     return 'ID Barang tidak boleh kosong!';
+                //   }
+                //   return null;
+                // },
               ),
               SizedBox(height: 10),
               TextFormField(
                 controller: kode_barang,
                 decoration: InputDecoration(
-                  hintText: ' Kode Barang',
+                  hintText: 'Kode Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -101,7 +107,7 @@ class _FormulirState extends State<Tambah> {
               TextFormField(
                 controller: merk,
                 decoration: InputDecoration(
-                  hintText: ' Merk Barang',
+                  hintText: 'Merk Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -132,6 +138,11 @@ class _FormulirState extends State<Tambah> {
               SizedBox(height: 10),
               TextFormField(
                 controller: jumlah,
+                keyboardType:
+                    TextInputType.number, // Set keyboard type to number
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly
+                ], // Only allow digits
                 decoration: InputDecoration(
                   hintText: 'Jumlah Barang',
                   border: OutlineInputBorder(

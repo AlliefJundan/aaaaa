@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sas/beranda.dart';
-import 'package:sas/homepage.dart';
+import 'package:sas/berandaUser.dart';
+import 'package:sas/login.dart';
 import 'package:sas/tes.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: Beranda(),
+      home: BerandaUser(),
     );
   }
 }
