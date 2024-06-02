@@ -47,6 +47,7 @@ $nomor = 0;
           <th scope="col">Tanggal Pinjam</th>
           <th scope="col">Tanggal Kembali</th>
           <th scope="col">ID Peminjam</th>
+          <th scope="col">ID Barang</th>
           <th scope="col">Kode Barang</th>
           <th scope="col">Nama Barang</th>
           <th scope="col">Jumlah Barang</th>
@@ -73,6 +74,9 @@ $nomor = 0;
             </td>
             <td>
               <?php echo $item['id_peminjam']; ?>
+            </td>
+            <td>
+              <?php echo $item['id_barang']; ?>
             </td>
             <td>
               <?php echo $item['kode_barang']; ?>

@@ -1,21 +1,30 @@
+<?php
+require_once('database.php');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+session_start();
+
+if ($_SESSION['status'] != "login") {
+    header("location:login.php?msg=belum_login");
+    exit;
+}
+
+$username = $_SESSION['username'];
+?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
   <title>Home</title>
-
   <style>
     html, body {
       height: 100%;
-      background-color: #808080; /* Set background color to gray */
+      background-color: #808080;
     }
     body {
       display: flex;
@@ -31,14 +40,7 @@
 </head>
 
 <body>
-  <?php
-  session_start();
-  if ($_SESSION['status'] != "login") {
-    header("location:login.php?msg=belum_login");
-  } else {
-    require('navbar.php');
-  }
-  ?>
+  <?php require('navbar.php'); ?>
 
   <div class="content">
     <center>
@@ -46,7 +48,7 @@
         <div class="container">
           <h1 class="display-4 text-white">Peminjaman Barang</h1>
           <p class="lead text-white">
-            <b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </b>
+            <b>Selamat Datang, <?php echo htmlspecialchars($username); ?>!</b>
           </p>
           <a role="button" class="btn btn-secondary btn-lg" href="barang.php">Barang</a>
         </div>
@@ -54,28 +56,27 @@
     </center>
   </div>
 
-  <footer class="footer mt-auto py-3 bg-dark">
+   <!-- Your existing content -->
+
+   <footer class="footer mt-auto py-3 bg-dark">
     <div class="container">
-      <span class="text-muted">Place sticky footer content here.</span>
+      <?php
+      if ($_SESSION['status'] == "login") {
+        echo "<br><span class='text-white'>Username: " . $_SESSION['username'] . "</span><br>";
+        echo "<span class='text-white'>ID User: " . $_SESSION['id_user'] . "</span>";
+      }
+      ?>
     </div>
   </footer>
 
-  <!-- Optional JavaScript; choose one of the two! -->
+  <!-- Your existing scripts -->
 
-  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-    crossorigin="anonymous"></script>
+</body>
+</html>
 
-  <!-- Option 2: Separate Popper and Bootstrap JS -->
-  <!--
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-  -->
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

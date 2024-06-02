@@ -29,7 +29,6 @@ function editdatabarang($tablename, $id)
     }
 }
 
-
 function delete($tablename, $id)
 {
     global $koneksi;
@@ -67,7 +66,6 @@ function tampildata1($tablename)
     return $rows;
 }
 
-
 function tambahbarang($kode_brg, $nama_brg, $kategori, $merk, $jumlah)
 {
     global $koneksi;
@@ -79,6 +77,7 @@ function tambahbarang($kode_brg, $nama_brg, $kategori, $merk, $jumlah)
         return "Error: " . $query . "<br>" . $koneksi->error;
     }
 }
+
 function getAllBarang()
 {
     global $koneksi;
@@ -99,11 +98,36 @@ function barang($id_barang)
     }
 }
 
+function searchdata($table, $search) {
+    global $koneksi;
+    $search_param = "%" . $search . "%";
+    $sql = "SELECT * FROM `$table` WHERE kode_barang LIKE ? OR nama_barang LIKE ? OR jenis LIKE ? OR merk LIKE ?";
+    $stmt = $koneksi->prepare($sql);
+
+    if (!$stmt) {
+        die("Error in preparing the statement: " . $koneksi->error);
+    }
+
+    $stmt->bind_param("ssss", $search_param, $search_param, $search_param, $search_param);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if (!$result) {
+        die("Error in executing the query: " . $stmt->error);
+    }
+
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 
 function kembali($tablename, $id) {
     global $koneksi;
-    // Example update assuming you want to set `status` to 'returned'
-    $hasil = mysqli_query($koneksi, "UPDATE $tablename SET status = 'Kembali' WHERE id_peminjaman = '$id'");
+    $hasil = mysqli_query($koneksi, "UPDATE $tablename SET status = 'tes' WHERE id_peminjaman = '$id'");
+    return $hasil;
+}
+
+function jumlah($id_barang, $jumlah) {
+    global $koneksi;
+    $hasil = mysqli_query($koneksi, "UPDATE barang SET jumlah = jumlah + $jumlah WHERE kode_barang = '$id_barang'");
     return $hasil;
 }
 
@@ -123,4 +147,42 @@ function populer($tablename)
     }
     return $rows;
 }
+
+function get_id_user($username)
+{
+    global $koneksi;
+    $query = "SELECT id_user FROM user WHERE username = '$username'";
+    $result = $koneksi->query($query);
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['id_user'];
+    } else {
+        return null;
+    }
+}
+
+function cek_role($username)
+{
+    global $koneksi;
+    $query = "SELECT role FROM user WHERE username = '$username'";
+    $result = $koneksi->query($query);
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['role'];
+    } else {
+        return null;
+    }
+}
+function getPeminjamanById($id_peminjaman) {
+    global $koneksi;
+  
+    $query = "SELECT * FROM peminjaman WHERE id_peminjaman = '$id_peminjaman'";
+    $result = mysqli_query($koneksi, $query);
+  
+    if ($result && mysqli_num_rows($result) > 0) {
+      return mysqli_fetch_assoc($result);
+    } else {
+      return null;
+    }
+  }
 ?>
