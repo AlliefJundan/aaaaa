@@ -6,9 +6,9 @@ $conn = mysqli_connect("localhost", "root", "", "sas");
 $id = $_POST['id_barang'];
 $nama = $_POST['nama_barang'];
 $kode = $_POST['kode_barang'];
-$merk = $_POST['merk_barang']; // Ubah menjadi merk_barang agar sesuai dengan yang dikirimkan dari Flutter
-$jenis = $_POST['jenis_barang']; // Ubah menjadi jenis_barang agar sesuai dengan yang dikirimkan dari Flutter
-$jumlah = $_POST['jumlah_barang']; // Ubah menjadi jumlah_barang agar sesuai dengan yang dikirimkan dari Flutter
+$merk = $_POST['merk_barang']; 
+$jenis = $_POST['jenis_barang']; 
+$jumlah = $_POST['jumlah_barang']; 
 
 $query = "UPDATE barang SET kode_barang='$kode', nama_barang='$nama', merk='$merk', jenis='$jenis', jumlah='$jumlah' WHERE id_barang='$id'";
 $data = mysqli_query($conn, $query);
