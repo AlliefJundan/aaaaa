@@ -70,7 +70,7 @@ $nomor = 0;
               <?php echo $item['id_peminjam']; ?>
             </td>
             <td>
-              <?php echo $item['kode_barang']; ?>
+              <?php echo $item['id_barang']; ?>
             </td>
             <td>
               <?php echo $item['kode_barang']; ?>
