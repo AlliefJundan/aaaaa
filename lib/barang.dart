@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sas/beranda.dart';
 import 'package:sas/editdata.dart';
 import 'package:sas/pinjam.dart';
 import 'package:sas/tambah.dart';
-import 'package:sas/beranda.dart'; // Import Beranda page
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BarangPage extends StatelessWidget {
   @override
@@ -14,11 +15,16 @@ class BarangPage extends StatelessWidget {
         title: Text('Barang'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            String username = prefs.getString('username') ?? 'default_username';
+            String idUser = prefs.getString('id_user') ?? 'default_id';
+
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => Beranda()), // Navigate to Beranda
+                  builder: (context) =>
+                      Beranda(username: username, idUser: idUser)),
             );
           },
         ),
@@ -118,7 +124,9 @@ class _BarangState extends State<Barang> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Pinjam(),
+                                  builder: (context) => Pinjam(
+                                    ListData: item,
+                                  ),
                                 ),
                               );
                             },

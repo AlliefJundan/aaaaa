@@ -1,97 +1,139 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sas/barang.dart';
 import 'package:sas/peminjaman.dart';
 import 'package:sas/pinjam.dart';
-import 'package:flutter/services.dart';
 import 'package:sas/user.dart';
-
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-  runApp(const Beranda());
-}
+import 'package:flutter/cupertino.dart';
+import 'package:sas/login.dart'; // Import halaman login
 
 class Beranda extends StatefulWidget {
-  const Beranda({Key? key}) : super(key: key);
+  final String username;
+  final String idUser;
+
+  const Beranda({Key? key, required this.username, required this.idUser})
+      : super(key: key);
 
   @override
   _BerandaState createState() => _BerandaState();
 }
 
 class _BerandaState extends State<Beranda> {
+  String? username;
+  String? idUser;
+  bool isLoggedIn = true; // Setel ke true setelah berhasil login
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = widget.username;
+      idUser = widget.idUser;
+      isLoggedIn = true; // Setel ke true saat berhasil login
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius:
-                    const BorderRadius.only(bottomRight: Radius.circular(50))),
-            child: Column(
-              children: [
-                const SizedBox(height: 0),
-                ListTile(
-                  title: Text('HI Admin',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall
-                          ?.copyWith(color: Colors.white)),
-                  subtitle: Text('Selamat Datang',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(color: Colors.white)),
-                )
-              ],
+    return WillPopScope(
+      onWillPop: () async =>
+          !isLoggedIn, // Nonaktifkan tombol kembali jika sudah login
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Beranda'),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.clear();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginForm()),
+                );
+              },
+              child: Text('Log Out'), // Teks yang menjadi tombol
             ),
-          ),
-          Expanded(
-            child: Container(
-              color: Theme.of(context).primaryColor,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(100))),
-                child: Column(
-                  children: [
-                    Spacer(flex: 2),
-                    GridView.count(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 40,
-                      mainAxisSpacing: 30,
-                      children: [
-                        itemDashboard(
-                            context,
-                            'Barang',
-                            CupertinoIcons.cube_box_fill,
-                            Colors.deepOrangeAccent,
-                            BarangPage()),
-                        itemDashboard(
-                            context,
-                            'Peminjaman',
-                            CupertinoIcons.table,
-                            Colors.deepOrangeAccent,
-                            PeminjamanPage()),
-                        itemDashboard(context, 'User', CupertinoIcons.person_2,
-                            Colors.deepOrangeAccent, UserPage()),
-                      ],
-                    ),
-                    Spacer(flex: 3),
-                  ],
-                ),
+          ],
+        ),
+        body: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(50))),
+              child: Column(
+                children: [
+                  const SizedBox(height: 0),
+                  ListTile(
+                    title: Text(
+                        'Username : $username', // Menggunakan username sebagai title
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(color: Colors.white)),
+                    subtitle: Text(
+                        'ID User: $idUser', // Menggunakan idUser sebagai subtitle
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: Colors.white)),
+                  )
+                ],
               ),
             ),
-          )
-        ],
+            Expanded(
+              child: Container(
+                color: Theme.of(context).primaryColor,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.only(topLeft: Radius.circular(100))),
+                  child: Column(
+                    children: [
+                      Spacer(flex: 2),
+                      GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 40,
+                        mainAxisSpacing: 30,
+                        children: [
+                          itemDashboard(
+                              context,
+                              'Barang',
+                              CupertinoIcons.cube_box_fill,
+                              Colors.deepOrangeAccent,
+                              BarangPage()),
+                          itemDashboard(
+                              context,
+                              'Peminjaman',
+                              CupertinoIcons.table,
+                              Colors.deepOrangeAccent,
+                              PeminjamanPage()),
+                          itemDashboard(
+                              context,
+                              'User',
+                              CupertinoIcons.person_2,
+                              Colors.deepOrangeAccent,
+                              UserPage()),
+                        ],
+                      ),
+                      Spacer(flex: 3),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

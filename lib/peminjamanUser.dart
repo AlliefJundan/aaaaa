@@ -1,14 +1,33 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sas/berandaUser.dart';
+import 'package:sas/detailPeminjamanUser.dart';
 import 'package:sas/pinjam.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PeminjamanUserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('PeminjamanUser'),
+          title: Text('Peminjaman'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              String username =
+                  prefs.getString('username') ?? 'default_username';
+              String idUser = prefs.getString('id_user') ?? 'default_id';
+
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        BerandaUser(username: username, idUser: idUser)),
+              );
+            },
+          ),
         ),
         body: PeminjamanUser());
   }
@@ -54,24 +73,29 @@ class _PeminjamanUserState extends State<PeminjamanUser> {
       child: Column(
         children: _listdata
             .map((item) => Card(
-                  child: ListTile(
-                    title: Text(item['nama_barang']),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            "ID PeminjamanUser : " + item['id_PeminjamanUser']),
-                        Text("ID Peminjam : " + item['id_peminjam']),
-                        Text("ID Barang : " + item['id_barang']),
-                        Text("Kode Barang : " + item['kode_barang']),
-                        Text("Tanggal Pinjam : " + item['tgl_pinjam']),
-                        Text("Tanggal Kembali : " + item['tgl_kembali']),
-                        Text("Jumlah Pinjam : " + item['jml_brg']),
-                        Text("Keperluan : " + item['keperluan']),
-                        Text("Status : " + item['status']),
-                        Text("ID Login : " + item['id_login']),
-                        SizedBox(height: 10),
-                      ],
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailPeminjamanUser(ListData: item),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      title: Text(item['nama_barang']),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("ID Peminjaman : " + item['id_peminjaman']),
+                          Text("ID Peminjam : " + item['id_peminjam']),
+                          Text("ID Barang : " + item['id_barang']),
+                          Text("Kode Barang : " + item['kode_barang']),
+                          Text("Tanggal Pinjam : " + item['tgl_pinjam']),
+                          SizedBox(height: 10),
+                        ],
+                      ),
                     ),
                   ),
                 ))
