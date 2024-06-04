@@ -9,6 +9,7 @@ class UserPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('User'),
+          backgroundColor: Colors.deepOrange,
         ),
         body: User());
   }
@@ -26,8 +27,8 @@ class _UserState extends State<User> {
 
   Future _getdata() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://192.168.88.90/projekSas/read3.php'));
+      final response = await http
+          .get(Uri.parse('http://192.168.43.246/projekSas/read3.php'));
       if (response.statusCode == 200) {
         print('Response Body: ${response.body}');
         final data = jsonDecode(response.body);

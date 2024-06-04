@@ -37,7 +37,7 @@ class _KembaliState extends State<Kembali> {
   Future<bool> _kembalikanBarang() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.88.90/projekSas/kembali.php'),
+        Uri.parse('http://192.168.43.246/projekSas/kembali.php'),
         body: {
           'id_peminjaman': idPeminjamanController.text,
           'id_barang': idBarangController.text,
@@ -77,99 +77,96 @@ class _KembaliState extends State<Kembali> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('ID Peminjaman:'),
                 SizedBox(height: 5),
                 TextFormField(
                   controller: idPeminjamanController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: 'ID Peminjaman',
+                    labelText: 'ID Peminjaman',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('ID Peminjam:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: idPeminjamController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: 'ID Peminjam',
+                    labelText: 'ID Peminjam',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('ID Barang:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: idBarangController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: 'ID Barang',
+                    labelText: 'ID Barang',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('Jumlah Barang:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: jumlahBrgController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: 'Jumlah Barang',
+                    labelText: 'Jumlah Barang',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('Status:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: statusController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: 'Status',
+                    labelText: 'Status',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                SizedBox(height: 20),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: statusController.text == 'Kembali'
+                        ? null
+                        : () {
+                            _kembalikanBarang().then((success) {
+                              final snackBar = SnackBar(
+                                content: Text(success
+                                    ? "Berhasil mengembalikan barang"
+                                    : "Gagal mengembalikan barang"),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                              if (success) {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PeminjamanPage()),
+                                  (route) => false,
+                                );
+                              }
+                            });
+                          },
+                    child: Text(
+                      'Kembalikan',
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  onPressed: statusController.text == 'Kembali'
-                      ? null
-                      : () {
-                          _kembalikanBarang().then((success) {
-                            final snackBar = SnackBar(
-                              content: Text(success
-                                  ? "Berhasil mengembalikan barang"
-                                  : "Gagal mengembalikan barang"),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                            if (success) {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PeminjamanPage()),
-                                (route) => false,
-                              );
-                            }
-                          });
-                        },
-                  child: Text('Kembalikan'),
                 ),
               ],
             ),

@@ -21,7 +21,7 @@ class _FormulirState extends State<Tambah> {
 
   Future<bool> _simpan() async {
     final response = await http.post(
-      Uri.parse('http://192.168.88.90/projekSas/create.php'),
+      Uri.parse('http://192.168.43.246/projekSas/create.php'),
       body: {
         'id_barang': id_barang.text,
         'kode_barang': kode_barang.text,
@@ -54,7 +54,7 @@ class _FormulirState extends State<Tambah> {
               TextFormField(
                 controller: nama_barang,
                 decoration: InputDecoration(
-                  hintText: 'Nama Barang',
+                  labelText: 'Nama Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -69,29 +69,20 @@ class _FormulirState extends State<Tambah> {
               SizedBox(height: 10),
               TextFormField(
                 controller: id_barang,
-                keyboardType:
-                    TextInputType.number, // Set keyboard type to number
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly
-                ], // Only allow digits
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
-                  hintText: 'ID Barang',
+                  labelText: 'ID Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                // validator: (value) {
-                //   if (value!.isEmpty) {
-                //     return 'ID Barang tidak boleh kosong!';
-                //   }
-                //   return null;
-                // },
               ),
               SizedBox(height: 10),
               TextFormField(
                 controller: kode_barang,
                 decoration: InputDecoration(
-                  hintText: 'Kode Barang',
+                  labelText: 'Kode Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -107,7 +98,7 @@ class _FormulirState extends State<Tambah> {
               TextFormField(
                 controller: merk,
                 decoration: InputDecoration(
-                  hintText: 'Merk Barang',
+                  labelText: 'Merk Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -123,7 +114,7 @@ class _FormulirState extends State<Tambah> {
               TextFormField(
                 controller: jenis,
                 decoration: InputDecoration(
-                  hintText: 'Jenis Barang',
+                  labelText: 'Jenis Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -138,13 +129,10 @@ class _FormulirState extends State<Tambah> {
               SizedBox(height: 10),
               TextFormField(
                 controller: jumlah,
-                keyboardType:
-                    TextInputType.number, // Set keyboard type to number
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly
-                ], // Only allow digits
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 decoration: InputDecoration(
-                  hintText: 'Jumlah Barang',
+                  labelText: 'Jumlah Barang',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -159,6 +147,7 @@ class _FormulirState extends State<Tambah> {
               SizedBox(height: 10),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -188,7 +177,10 @@ class _FormulirState extends State<Tambah> {
                     );
                   }
                 },
-                child: Text('Simpan'),
+                child: Text(
+                  'Simpan',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),

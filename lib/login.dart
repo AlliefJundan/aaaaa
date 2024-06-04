@@ -17,7 +17,7 @@ class _LoginFormState extends State<LoginForm> {
   Future<void> _login() async {
     final String username = usernameController.text.trim();
     final String password = passwordController.text.trim();
-    final apiUrl = 'http://192.168.88.90/projekSas/login.php';
+    final apiUrl = 'http://192.168.43.246/projekSas/login.php';
 
     try {
       final response = await http.post(
@@ -108,8 +108,14 @@ class _LoginFormState extends State<LoginForm> {
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center, // Center widget
+          crossAxisAlignment: CrossAxisAlignment.start, // Align text to start
           children: [
+            Text(
+              'Peminjaman Login', // Large title
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20), // Spacing between title and TextFormFields
             TextFormField(
               controller: usernameController,
               decoration: InputDecoration(labelText: 'Username'),
@@ -122,7 +128,14 @@ class _LoginFormState extends State<LoginForm> {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: _login,
-              child: Text('Login'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Set button color to blue
+                minimumSize: Size(double.infinity, 50), // Full width
+              ),
+              child: Text(
+                'Login',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),

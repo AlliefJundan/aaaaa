@@ -43,22 +43,57 @@ class _BerandaUserState extends State<BerandaUser> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async =>
-          !isLoggedIn, // Nonaktifkan tombol kembali jika sudah login
+      onWillPop: () async => !isLoggedIn,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Beranda'),
+          backgroundColor: Color.fromARGB(255, 45, 31, 106),
+          foregroundColor: Colors.white,
           actions: [
-            TextButton(
-              onPressed: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                await prefs.clear();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginForm()),
-                );
-              },
-              child: Text('Log Out'),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.lightBlue),
+                onPressed: () async {
+                  bool? confirmLogout = await showDialog<bool>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Konfirmasi Logout'),
+                        content: Text('Apakah Anda yakin ingin logout?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(false); // Cancel logout
+                            },
+                            child: Text('Batal'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(true); // Confirm logout
+                            },
+                            child: Text('Ya'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+
+                  if (confirmLogout == true) {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.clear();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginForm()),
+                    );
+                  }
+                },
+                child: Text(
+                  'Log Out',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ),
           ],
         ),

@@ -12,6 +12,7 @@ class PeminjamanUserPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Peminjaman'),
+          backgroundColor: Colors.deepOrange,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () async {
@@ -45,8 +46,8 @@ class _PeminjamanUserState extends State<PeminjamanUser> {
 
   Future _getdata() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://192.168.88.90/projekSas/read2.php'));
+      final response = await http
+          .get(Uri.parse('http://192.168.43.246/projekSas/read2.php'));
       if (response.statusCode == 200) {
         print('Response Body: ${response.body}');
         final data = jsonDecode(response.body);

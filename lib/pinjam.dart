@@ -41,7 +41,7 @@ class _PinjamState extends State<Pinjam> {
   Future<bool> _editBarang() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.88.90/projekSas/pinjam.php'),
+        Uri.parse('http://192.168.43.246/projekSas/pinjam.php'),
         body: {
           'id_barang': widget.ListData['id_barang'],
           'nama_barang': namaController.text,
@@ -130,144 +130,134 @@ class _PinjamState extends State<Pinjam> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Kode Barang:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: kodeController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: 'Kode Barang',
+                    labelText: 'Kode Barang',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('Nama Barang:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: namaController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: 'Nama Barang',
+                    labelText: 'Nama Barang',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('Merk Barang:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: merkController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: 'Merk Barang',
+                    labelText: 'Merk Barang',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('Jenis Barang:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: jenisController,
                   readOnly: true,
                   decoration: InputDecoration(
-                    hintText: 'Jenis Barang',
+                    labelText: 'Jenis Barang',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('Jumlah Tersedia:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: jumlahController,
                   readOnly: true,
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
-                    hintText: 'Jumlah Tersedia',
+                    labelText: 'Jumlah Tersedia',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('ID Peminjam:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: idPeminjamController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
-                    hintText: 'ID Peminjam',
+                    labelText: 'ID Peminjam',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('Jumlah Dipinjam:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: jumlahDipinjamController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
-                    hintText: 'Jumlah',
+                    labelText: 'Jumlah Dipinjam',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('Keperluan:'),
-                SizedBox(height: 5),
                 TextFormField(
                   controller: keperluanController,
                   decoration: InputDecoration(
-                    hintText: 'Keperluan',
+                    labelText: 'Keperluan',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                  ),
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      final jumlahDipinjam =
-                          int.parse(jumlahDipinjamController.text);
-                      if (_cekJumlah(jumlahDipinjam, jumlahTersediaSekarang)) {
-                        _editBarang().then((success) {
-                          final snackBar = SnackBar(
-                            content: Text(success
-                                ? "Berhasil meminjam barang"
-                                : "Gagal meminjam barang"),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                          if (success) {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PeminjamanPage()),
-                              (route) => false,
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        final jumlahDipinjam =
+                            int.parse(jumlahDipinjamController.text);
+                        if (_cekJumlah(
+                            jumlahDipinjam, jumlahTersediaSekarang)) {
+                          _editBarang().then((success) {
+                            final snackBar = SnackBar(
+                              content: Text(success
+                                  ? "Berhasil meminjam barang"
+                                  : "Gagal meminjam barang"),
                             );
-                          }
-                        });
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                            if (success) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PeminjamanPage()),
+                                (route) => false,
+                              );
+                            }
+                          });
+                        }
                       }
-                    }
-                  },
-                  child: Text('Pinjam'),
+                    },
+                    child:
+                        Text('Pinjam', style: TextStyle(color: Colors.white)),
+                  ),
                 ),
               ],
             ),

@@ -13,6 +13,7 @@ class BarangPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Barang'),
+        backgroundColor: Colors.deepOrange,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () async {
@@ -56,7 +57,7 @@ class _BarangState extends State<Barang> {
   Future _getdata() async {
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.88.90/projekSas/read.php'));
+          await http.get(Uri.parse('http://192.168.43.246/projekSas/read.php'));
       if (response.statusCode == 200) {
         print('Response Body: ${response.body}');
         final data = jsonDecode(response.body);
@@ -74,7 +75,7 @@ class _BarangState extends State<Barang> {
   Future _hapus(String id) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.88.90/projekSas/delete.php'),
+        Uri.parse('http://192.168.43.246/projekSas/delete.php'),
         body: {
           'id_barang': id,
         },
@@ -120,6 +121,10 @@ class _BarangState extends State<Barang> {
                       Row(
                         children: [
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+                            ),
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -134,6 +139,10 @@ class _BarangState extends State<Barang> {
                           ),
                           SizedBox(width: 10),
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                            ),
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -148,6 +157,10 @@ class _BarangState extends State<Barang> {
                           ),
                           SizedBox(width: 10),
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                            ),
                             onPressed: () {
                               showDialog(
                                 barrierDismissible: false,
@@ -168,7 +181,9 @@ class _BarangState extends State<Barang> {
                                                 (route) => false);
                                           });
                                         },
-                                        child: Text('Hapus'),
+                                        child: Text(
+                                          'Hapus',
+                                        ),
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
